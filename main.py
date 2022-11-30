@@ -22,48 +22,6 @@ import utils
 from utils.utils import read_all_datasets
 
 
-# # use train_features as input
-# train_features = pd.read_csv('/home/dyn/paper_experiment/tsc/dataset/frame=3000(9)/train_features.csv')
-# test_features = pd.read_csv('/home/dyn/paper_experiment/tsc/dataset/frame=3000(9)/test_features.csv')
-#
-# # use time-size as input
-# #修改标签！！！
-# train_labels = pd.read_csv(r'/home/dyn/paper_experiment/tsc/dataset/frame=3000(9)/train_labels.csv')
-# test_labels = pd.read_csv(r'/home/dyn/paper_experiment/tsc/dataset/frame=3000(9)/test_labels.csv')
-#
-# train = pd.read_csv('/home/dyn/paper_experiment/tsc/dataset/frame=3000(9)/train_new.csv')
-# test = pd.read_csv('/home/dyn/paper_experiment/tsc/dataset/frame=3000(9)/test_new.csv')
-
-
-# os.path.join()
-def fit_classifier():
-    y_train = pd.read_csv(r'/home/dyn/paper_experiment/tsc/dataset/frame=1000(9)/train_labels.csv')
-    y_test = pd.read_csv(r'/home/dyn/paper_experiment/tsc/dataset/frame=1000(9)/test_labels.csv')
-
-    x_train = pd.read_csv('/home/dyn/paper_experiment/tsc/dataset/frame=1000(9)/train_features.csv')
-    x_test = pd.read_csv('/home/dyn/paper_experiment/tsc/dataset/frame=1000(9)/test_features.csv')
-
-    nb_classes = len(np.unique(np.concatenate((y_train, y_test), axis=0)))
-
-    # transform the labels from integers to one hot vectors
-    enc = sklearn.preprocessing.OneHotEncoder(categories='auto')
-    enc.fit(np.concatenate((y_train, y_test), axis=0).reshape(-1, 1))
-    y_train = enc.transform(y_train.values.reshape(-1, 1)).toarray()
-    y_test = enc.transform(y_test.values.reshape(-1, 1)).toarray()
-
-    # save orignal y because later we will use binary
-    y_true = np.argmax(y_test, axis=1)
-
-    if len(x_train.shape) == 2:  # if univariate
-        # add a dimension to make it multivariate with one dimension 增加一维说明 一个时间步长有1个变量  9维为9个变量
-        x_train = x_train.values.reshape((x_train.shape[0], x_train.shape[1], 1))
-        x_test = x_test.values.reshape((x_test.shape[0], x_test.shape[1], 1))
-
-    input_shape = x_train.shape[1:]
-    classifier_name = "resnet"
-    output_directory=""
-    classifier = create_classifier(classifier_name,input_shape, nb_classes,output_directory)
-    classifier.fit(x_train, y_train, x_test, y_test, y_true)
 
 def create_classifier(classifier_name, input_shape, nb_classes, output_directory, verbose=False):
     if classifier_name == 'fcn':
@@ -97,19 +55,15 @@ def create_classifier(classifier_name, input_shape, nb_classes, output_directory
         from models import inception
         return inception.Classifier_INCEPTION(output_directory, input_shape, nb_classes, verbose)
 
-
-
-
-
-# change function name
 #use time_size as input
-def fit_classifier2():
+def fit_classifier(data_path):
     #x_train, x_test, y_train, y_test = train_test_split(train, train_labels)
-    y_train = pd.read_csv(r'/home/dyn/paper_experiment/tsc/dataset/frame=3000(6)(250)/train_labels.csv')
-    y_test = pd.read_csv(r'/home/dyn/paper_experiment/tsc/dataset/frame=3000(6)(250)/test_labels.csv')
+    
+    y_train = pd.read_csv(os.path.join(data_path,'train_labels.csv'))
+    y_test = pd.read_csv(os.path.join(data_path,'test_labels.csv'))
 
-    x_train = pd.read_csv('/home/dyn/paper_experiment/tsc/dataset/frame=3000(6)(250)/train_new.csv')
-    x_test = pd.read_csv('/home/dyn/paper_experiment/tsc/dataset/frame=3000(6)(250)/test_new.csv')
+    x_train = pd.read_csv(os.path.join(data_path,'train_new.csv'))
+    x_test = pd.read_csv(os.path.join(data_path,'test_new.csv'))
 
     nb_classes = len(np.unique(np.concatenate((y_train, y_test), axis=0)))
 
@@ -135,5 +89,6 @@ def fit_classifier2():
 
 
 
-#fit_classifier()
-fit_classifier2()
+if __name__ == '__main__':
+    
+    fit_classifier(data_path)
