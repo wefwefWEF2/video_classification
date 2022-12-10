@@ -4,8 +4,8 @@ import pandas as pd
 
 
 ##读取data_new文件
-data_new_path =os.path.join(r'F:\qinghua_intership\project\tsc_new\dataset\data_new')    #数据集路径
-test_new_path =os.path.join(r'F:\qinghua_intership\project\tsc_new\dataset\data_test')  #测试集路径
+data_new_path =os.path.join(r'path','data_new')    #数据集路径
+test_new_path =os.path.join(r'path','data_test')  #测试集路径
 
 
 
@@ -23,9 +23,13 @@ def compare_file(file1,file2):
     #print(len(column1))
     column2 =file2['size'].values.tolist()
     #print(len(column2))
+    #修改比较前多少个值
+    column1_20 = column1[0:5]
+    column2_20 = column2[0:5]
     #判断相同文件
-    if (len(column1)==len(column2)) & (column1==column2):
+    if (len(column1)==len(column2)) & (column1_20==column2_20):
         #print(file1.name)
+        #print(file2.name)
         return True
 
 def compare_folder(data_new_path, test_new_path):
