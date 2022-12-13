@@ -22,18 +22,21 @@ def readline_count(file_name):
     return len(open(file_name).readlines())
 
 #排除行数不够的文件(frame不够) 并给所有原始文件添加label
-def file_select(path_ori,path_new):
+def file_select(path_ori,path_new,frame_num):
     os.chdir(path_ori)
-    files = os.listdir(path_ori)
+    files = os.listdir(path_ori )
+    all_files = glob.glob(path_ori + '/' + '*.csv')
+    all_files = sorted([pathlib.Path(i) for i in all_files])
     for file in files:
-        if readline_count(file) >3000:
-            file_df= pd.concat([pd.read_csv(file,header=None).assign(New=os.path.basename(file).split('.')[0])  # 增加列为文件名字（添加label）
-                           ])
-            file_df.columns = ['name', 'time', 'size','label']  #列名字
+        if file.endswith(".csv"):
+            if readline_count(file) >= frame_num:
+                file_df= pd.concat([pd.read_csv(file,header=None).assign(New=os.path.basename(file).split('.')[0])  # 增加列为文件名字（添加label）
+                               ])
+                file_df.columns = ['name', 'time', 'size','label']  #列名字
 
-            file_df['label'] = file_df['label'].apply(lambda x: re.sub(r'^([a-zA-Z]+).*', r'\1', x)) #只保留label字母 去掉数字等其他参数
-            file_df.to_csv(os.path.join(path_new, file))  # set the output file location and name at the sametime
-            print("succ")
+                file_df['label'] = file_df['label'].apply(lambda x: re.sub(r'^([a-zA-Z]+).*', r'\1', x)) #只保留label字母 去掉数字等其他参数
+                file_df.to_csv(os.path.join(path_new, file))  # set the output file location and name at the sametime
+                #print("succ")
 
 
 #path_new内所有文件批量按序号重命名
@@ -182,7 +185,7 @@ if __name__ == '__main__':
     path_new = r'/code/tsc/dataset/data/data_new'
     path_train=r'/code/tsc/dataset/data/data_train'
 
-    file_select(path_ori, path_new)
+    file_select(path_ori, path_new,3000)
     rename(path_new)
     target_deal(path_new,path_train)
     data_combine(path_new, path_train, 3000)
