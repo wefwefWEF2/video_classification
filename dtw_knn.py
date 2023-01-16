@@ -33,11 +33,11 @@ data_path= r'/code/DTW/data_ceshiji_train'
 # data_path= r'/code/tsc/dataset/data/data_train'
 
 
-y_train = pd.read_csv(os.path.join(data_path, 'train_labels.csv'))
-y_test = pd.read_csv(os.path.join(data_path, 'test_labels.csv'))
+y_train = pd.read_csv(os.path.join(data_path, 'train_label_combine.csv'))
+y_test = pd.read_csv(os.path.join(data_path, 'test_label_combine.csv'))
 
-X_train = pd.read_csv(os.path.join(data_path, 'train_new.csv'))
-X_test = pd.read_csv(os.path.join(data_path, 'test_new.csv'))
+X_train = pd.read_csv(os.path.join(data_path, 'train_combine.csv'))
+X_test = pd.read_csv(os.path.join(data_path, 'test_combine.csv'))
 
 nb_classes = len(np.unique(np.concatenate((y_train, y_test), axis=0)))
 
