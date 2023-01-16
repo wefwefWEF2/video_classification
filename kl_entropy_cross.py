@@ -3,6 +3,7 @@
 # author: chicho
 # running: python trees.py
 # filename : trees.py
+import os
 from itertools import chain
 from math import log
 import scipy.stats
@@ -82,11 +83,11 @@ def entropy_interval(data, intervals):
     return Shannon2
 
 #将数据展成一行
-def trans_to_calculate(data_path):
-    test_combine1 = pd.read_csv(data_path)
+def trans_to_calculate(data):
+    # test_combine1 = pd.read_csv(data_path)
 
-    test = np.array(test_combine1)
-    print(test.shape)
+    test = np.array(data)
+    # print(test.shape)
     # print(label.shape)
     test = test.tolist()
     c = list(chain(*test))
@@ -94,7 +95,7 @@ def trans_to_calculate(data_path):
     dataSet = np.array(dataSet).transpose()
     # 传入c为n行一列的数组形式
     c = np.array(c)
-    print(c.shape)
+    # print(c.shape)
     return c
 
 
@@ -102,6 +103,7 @@ def trans_to_calculate(data_path):
 
 #计算间隔为interval,并且去分间隔统计的kl散度 cross entropy entropy
 def kl_interval(data1,data2,intervals1,intervals2):
+
     data1= trans_to_calculate(data1)
     data2 = trans_to_calculate(data2)
 #统计data1
@@ -115,7 +117,8 @@ def kl_interval(data1,data2,intervals1,intervals2):
 
     countDataSet1 = len(data1)
     countDataSet2 = len(data2)
-    print(countDataSet1)
+    #打印查看数据长度信息
+    # print(countDataSet1)
     prob_sum = 0.0
 #统计data2
     for num in data2:
@@ -156,12 +159,12 @@ def kl_interval(data1,data2,intervals1,intervals2):
             shannonEnt += -prob1[i]* log(prob1[i], 2)
             prob_sum+=prob2[i]
             kl_check=cross_entropy-shannonEnt
-    print("0-200qujian")
-    print("kl")
-    # print(prob_sum)
-    print(KL)
-    print("entropy")
-    print(shannonEnt)
+    # print("0-200qujian")
+    # print("kl")
+    # # print(prob_sum)
+    # print(KL)
+    # print("entropy")
+    # print(shannonEnt)
     #print("cross-entropy")
     #print(cross_entropy)
 
@@ -178,12 +181,12 @@ def kl_interval(data1,data2,intervals1,intervals2):
 
     print("200yishangqujian")
     print("kl")
-    # print(prob_sum)
     print(KL)
-    print("entropy")
-    print(shannonEnt)
-    print("cross-entropy")
-    print(cross_entropy)
+    # print(prob_sum)
+    # print("entropy")
+    # print(shannonEnt)
+    # print("cross-entropy")
+    # print(cross_entropy)
     return KL
 
 
@@ -210,15 +213,30 @@ if __name__ == '__main__':
     # print(intervals)
 
     # print(data)
-    c=trans_to_calculate(r'cartoon.csv')
+    #c=trans_to_calculate(r'cartoon.csv')
     #entropy_interval(c, intervals)
     # interval_statistics(c, intervals)
 
 
     #区间为intervals的 kl散度计算aerial
-    data1=(r'/code/tsc/entropy/20lei1500k3000fdata/datacut/new/tiktok1.csv')
-    data2 = (r'/code/tsc/entropy/20lei1500k3000fdata/datacut/new/tiktok2.csv')
-    kl_interval(data1, data2, intervals1,intervals2)
+    data1=(r'/code/tsc/entropy/20lei1500k3000fdata/data1')
+    data2 = (r'/code/tsc/entropy/20lei1500k3000fdata/data2')
+    data1 = (r'/code/tsc/entropy/20lei1500k3000fdata/data1')
+    data2 = (r'/code/tsc/entropy/20lei1500k3000fdata/data2')
+    files1 = os.listdir(data1)
+    files2 = os.listdir(data2)
+    for file1 in files1:
+        print(os.path.basename(file1))
+        f1 = pd.read_csv(os.path.join(data1, file1))
+        for file2 in files2:
+            f2 = pd.read_csv(os.path.join(data2, file2))
+            print(os.path.basename(file2))
+            #kl_interval(data1, data2, intervals1, intervals2)
+            kl_interval(f1, f2, intervals1, intervals2)
+
+
+
+
 
 
 
