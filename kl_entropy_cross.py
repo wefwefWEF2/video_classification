@@ -95,7 +95,7 @@ def trans_to_calculate(data):
     dataSet = np.array(dataSet).transpose()
     # 传入c为n行一列的数组形式
     c = np.array(c)
-    # print(c.shape)
+    print(c.shape)
     return c
 
 
@@ -103,6 +103,10 @@ def trans_to_calculate(data):
 
 #计算间隔为interval,并且去分间隔统计的kl散度 cross entropy entropy
 def kl_interval(data1,data2,intervals1,intervals2):
+    shannonEnt = 0.0
+    KL = 0.0
+    prob_sum = 0.0
+    cross_entropy = 0.0
 
     data1= trans_to_calculate(data1)
     data2 = trans_to_calculate(data2)
@@ -132,10 +136,7 @@ def kl_interval(data1,data2,intervals1,intervals2):
     countDataSet2 = len(data2)
 
  # 分区间计算kl entropy
-    shannonEnt = 0.0
-    KL = 0.0
-    prob_sum = 0.0
-    cross_entropy=0.0
+
     # for value in intervals1.items() and intervals2.items():
     #for i in range(0,10000000000000000):
 
@@ -179,14 +180,15 @@ def kl_interval(data1,data2,intervals1,intervals2):
             shannonEnt += -prob1[i] * log(prob1[i], 2)
             prob_sum += prob2[i]
 
-    print("200yishangqujian")
+    # print("200yishangqujian")
     print("kl")
     print(KL)
-    # print(prob_sum)
-    # print("entropy")
-    # print(shannonEnt)
-    # print("cross-entropy")
-    # print(cross_entropy)
+    print(prob_sum)
+    print("entropy")
+    print(shannonEnt)
+    print("cross-entropy")
+    print(cross_entropy)
+
     return KL
 
 
@@ -206,9 +208,7 @@ if __name__ == '__main__':
     start = 0  # 区间左端点
     number_of_interval = 5000# 区间个数
     length =3333 # 区间长度
-    intervals1 = {'{:.2f}~{:.2f}'.format(length * x + start, length * (x+1) + start): 0 for x in range(number_of_interval)} # 生成区间
-    intervals2 = {'{:.2f}~{:.2f}'.format(length * x + start, length * (x + 1) + start): 0 for x in
-                  range(number_of_interval)}  # 生成区间
+
 
     # print(intervals)
 
@@ -225,14 +225,34 @@ if __name__ == '__main__':
     data2 = (r'/code/tsc/entropy/20lei1500k3000fdata/data2')
     files1 = os.listdir(data1)
     files2 = os.listdir(data2)
+
     for file1 in files1:
         print(os.path.basename(file1))
         f1 = pd.read_csv(os.path.join(data1, file1))
         for file2 in files2:
             f2 = pd.read_csv(os.path.join(data2, file2))
+            intervals1 = {'{:.2f}~{:.2f}'.format(length * x + start, length * (x + 1) + start): 0 for x in
+                          range(number_of_interval)}  # 生成区间
+            intervals2 = {'{:.2f}~{:.2f}'.format(length * x + start, length * (x + 1) + start): 0 for x in
+                          range(number_of_interval)}  # 生成区间
             print(os.path.basename(file2))
             #kl_interval(data1, data2, intervals1, intervals2)
+
+
             kl_interval(f1, f2, intervals1, intervals2)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
