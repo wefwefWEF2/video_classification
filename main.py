@@ -1,6 +1,9 @@
 import numpy as np
 import pandas as pd
 import sklearn
+import random
+import tensorflow as tf
+from tensorflow import keras
 from sklearn.metrics import accuracy_score
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
@@ -18,9 +21,26 @@ import numpy as np
 import sys
 import sklearn
 import utils
+import os
+import timeit
+import tensorflow.keras as keras
+import numpy as np
+import time
+import pandas as pd
+import matplotlib
+from utils.utils import save_test_duration
+matplotlib.use('agg')
+from utils.utils import calculate_metrics
+import sklearn
 
 from utils.utils import read_all_datasets
 
+
+def setup_seed(seed):
+    random.seed(seed)  # 为python设置随机种子
+    np.random.seed(seed)  # 为numpy设置随机种子
+    tf.random.set_seed(seed)  # tf cpu fix seed
+    os.environ['TF_DETERMINISTIC_OPS'] = '1'  # tf gpu fix seed, please `pip install tensorflow-determinism` first
 
 
 def create_classifier(classifier_name, input_shape, nb_classes, output_directory, verbose=False):
@@ -64,6 +84,12 @@ def fit_classifier(data_path):
 
     x_train = pd.read_csv(os.path.join(data_path,'train_new.csv'))
     x_test = pd.read_csv(os.path.join(data_path,'test_new.csv'))
+    
+    x_train = x_train.iloc[:, :3000] 
+    y_train = y_train[:] 
+    x_test = x_test.iloc[:, :3000] 
+    y_test = y_test[:] 
+
 
     nb_classes = len(np.unique(np.concatenate((y_train, y_test), axis=0)))
 
@@ -83,12 +109,18 @@ def fit_classifier(data_path):
 
     input_shape = x_train.shape[1:]
     classifier_name = "resnet"
-    output_directory=""
+    output_directory="/code/tsc/result/deepfake/++/qp23/"
     classifier = create_classifier(classifier_name,input_shape, nb_classes,output_directory)
     classifier.fit(x_train, y_train, x_test, y_test, y_true)
 
 
 
 if __name__ == '__main__':
-    
+    log = open("/code/tsc/result/30f_comparewith_dtw/resnet.txt",mode="a",encoding="utf-8")
+    start = timeit.default_timer()
+    data_path= r'/code/tsc/dataset/deep_fake/++/face_swap/qp23/train/data_train'
+    setup_seed(100)
     fit_classifier(data_path)
+    end = timeit.default_timer()
+    print('Running time: %s Seconds' % (end - start),file = log)
+    log.close()
