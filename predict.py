@@ -15,12 +15,12 @@ import sklearn
 
 
 
-
 def predict(x_test, y_true, return_df_metrics=True):
     start_time = time.time()
 
-    model_path = os.path.join(r'/code/tsc/result/1000k/40_60e=150_b=8/frame=3000','best_model.hdf5')
+    model_path = os.path.join(r'/code/tsc/result/deepfake/++/qp23','best_model.hdf5')
     model = keras.models.load_model(model_path)
+    
     y_pred = model.predict(x_test)
     y_pred_trans = np.argmax(y_pred, axis=1)#预测值转为二进制
     if return_df_metrics:
@@ -38,9 +38,16 @@ def predict(x_test, y_true, return_df_metrics=True):
 
 if __name__ == '__main__':
     start = timeit.default_timer()
-    y_test = pd.read_csv(os.path.join(r'/code/tsc/dataset/1000k_3000f_experiment','test_labels.csv'))
+    data_path=r'/code/tsc/dataset/deep_fake/++/face_swap/qp23/test/data_train'
+    y_test = pd.read_csv(os.path.join(data_path,'label_combine.csv'))
 
-    x_test = pd.read_csv(os.path.join(r'/code/tsc/dataset/1000k_3000f_experiment','test_new.csv'))
+    x_test = pd.read_csv(os.path.join(data_path,'test_combine.csv'))
+
+    #x_train = x_train.iloc[:, :300] 
+    #y_train = y_train[:] 
+    x_test = x_test.iloc[:, :300] 
+    y_test = y_test[:] 
+
 
     # transform the labels from integers to one hot vectors
     enc = sklearn.preprocessing.OneHotEncoder(categories='auto')
@@ -50,8 +57,9 @@ if __name__ == '__main__':
     y_true = np.argmax(y_test, axis=1)
 
 
-    predict(x_test = pd.read_csv(r'/code/tsc/dataset/1000k_3000f_experiment/test_new.csv'),y_true=y_true,return_df_metrics=True)
+    predict( x_test = x_test,y_true=y_true,return_df_metrics=True)
     print("################True results###########")
+    print(y_true.shape)
     print(y_true)
 
     end = timeit.default_timer()
