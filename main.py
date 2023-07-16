@@ -4,6 +4,8 @@ import sklearn
 import random
 import tensorflow as tf
 from tensorflow import keras
+import argparse
+
 from sklearn.metrics import accuracy_score
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
@@ -34,6 +36,7 @@ from utils.utils import calculate_metrics
 import sklearn
 
 from utils.utils import read_all_datasets
+
 
 
 def setup_seed(seed):
@@ -76,7 +79,7 @@ def create_classifier(classifier_name, input_shape, nb_classes, output_directory
         return inception.Classifier_INCEPTION(output_directory, input_shape, nb_classes, verbose)
 
 #use time_size as input
-def fit_classifier(data_path):
+def fit_classifier(data_path,output_path,classifier_name):
     #x_train, x_test, y_train, y_test = train_test_split(train, train_labels)
     
     y_train = pd.read_csv(os.path.join(data_path,'train_labels.csv'))
@@ -85,10 +88,10 @@ def fit_classifier(data_path):
     x_train = pd.read_csv(os.path.join(data_path,'train_new.csv'))
     x_test = pd.read_csv(os.path.join(data_path,'test_new.csv'))
     
-    x_train = x_train.iloc[:, :3000] 
-    y_train = y_train[:] 
-    x_test = x_test.iloc[:, :3000] 
-    y_test = y_test[:] 
+    # x_train = x_train.iloc[:, :300] 
+    # y_train = y_train[:] 
+    # x_test = x_test.iloc[:, :300] 
+    # y_test = y_test[:] 
 
 
     nb_classes = len(np.unique(np.concatenate((y_train, y_test), axis=0)))
@@ -109,18 +112,36 @@ def fit_classifier(data_path):
 
     input_shape = x_train.shape[1:]
     classifier_name = "resnet"
-    output_directory="/code/tsc/result/deepfake/++/qp23/"
+    output_directory = output_path
     classifier = create_classifier(classifier_name,input_shape, nb_classes,output_directory)
     classifier.fit(x_train, y_train, x_test, y_test, y_true)
 
 
 
 if __name__ == '__main__':
-    log = open("/code/tsc/result/30f_comparewith_dtw/resnet.txt",mode="a",encoding="utf-8")
-    start = timeit.default_timer()
-    data_path= r'/code/tsc/dataset/deep_fake/++/face_swap/qp23/train/data_train'
+
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('--data_path', type=str, default='', help='Path to the dataset.')
+    parser.add_argument('--output_directory', type=str, default='', help='Output directory for saving the models.')
+    parser.add_argument('--classifier_name', type=str, default='resnet', help='Classifier to use. One of "fcn", "mlp", "resnet", "mcnn", "tlenet", "twiesn", "encoder", "mcdcnn", "cnn_tsc", "inception".')
+
+    args = parser.parse_args()
+
+    if not os.path.exists(args.output_directory):
+        os.makedirs(args.output_directory)
+    print(args.output_directory)
+    #ceate log for recording
+
+
+    # data_path= r'/code/tsc/dataset/deep_fake/++/face_swap/qp23/train/data_train'
+    # output_directory="/code/tsc/result/deepfake/++/qp23/"
+
+    # data_path= r'/code/tsc/dataset/new_exp_7_14/cbr_exp/3000f/use_b/800k_3000f_experiment/train/data_train'
+    # output_directory="/code/tsc/result/new_exp_add/cbr_exp/use_b/800k/"
+
+
     setup_seed(100)
-    fit_classifier(data_path)
-    end = timeit.default_timer()
-    print('Running time: %s Seconds' % (end - start),file = log)
-    log.close()
+    # fit_classifier(data_path,output_directory,classifier_name = "resnet")
+
+    fit_classifier(data_path = args.data_path , output_path= args.output_directory , classifier_name = args.classifier_name)
