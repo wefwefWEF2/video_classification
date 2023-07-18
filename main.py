@@ -83,10 +83,13 @@ def fit_classifier(data_path,output_path,classifier_name):
     #x_train, x_test, y_train, y_test = train_test_split(train, train_labels)
     
     y_train = pd.read_csv(os.path.join(data_path,'train_labels.csv'))
-    y_test = pd.read_csv(os.path.join(data_path,'test_labels.csv'))
+    # y_test = pd.read_csv(os.path.join(data_path,'test_labels.csv'))
 
     x_train = pd.read_csv(os.path.join(data_path,'train_new.csv'))
-    x_test = pd.read_csv(os.path.join(data_path,'test_new.csv'))
+    # x_test = pd.read_csv(os.path.join(data_path,'test_new.csv'))
+
+    #split train into train and validation
+    x_train, x_test, y_train, y_test = train_test_split(x_train, y_train, test_size=0.1, random_state=42)
     
     # x_train = x_train.iloc[:, :300] 
     # y_train = y_train[:] 
