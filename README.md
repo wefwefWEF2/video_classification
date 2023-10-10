@@ -31,43 +31,36 @@ We created a large data set consisting of 29,142 video clips, each containing at
 
 
 ### Data preprocess
-Transcoded the input video to 1.5，1.2，1.0，0.8，0.5 Mbps using the FFmpeg open source H.264/AVC encoder with the same encoding settings.
+Transcoded the input video to 1.5, 1.2, 1.0, 0.8, and 0.5 Mbps using the FFmpeg open-source H.264/AVC encoder with the same encoding settings.
 
 ```
-python preprocess.py
+ffmpeg -i input -c:v libx264 -b:v 1.5M output
+```
+Extract bitstream cover of the videos
+
+```
+cd /ffmpeg_frame_size_calculate
+bash deal.sh
 ```
 
-(Optional) Split the training set into k-fold for the **cross-validation** experiment.
 
+Merge and preprocess data
 ```
-python split.py
+python data_deal.py
 ```
 
 ## Training
-D2-Net can be trained by running following command:
 
 ```
-sh tool/train.sh
+python main.py
 ```
-In our experiments, D2-Net is built on the lightweight backbone [U2-Net](https://arxiv.org/abs/1909.06012). Training D2-Net requires at least one V100 GPU with 32G memory. The defualt hyperparameters are set in train.py. Running the training code will generate logs files and saved models in a directory name logs and ckpts, respectively.
 
 ## Inference
-D2-Net can be tested with a saved model using following command:
-```
-sh tool/inference.sh
-```
-The inference code will test all 15 cases with missing modalities together.
 
-## Citation
 ```
-@article{yang2022d2,
-  title={D2-Net: Dual Disentanglement Network for Brain Tumor Segmentation with Missing Modalities},
-  author={Yang, Qiushi and Guo, Xiaoqing and Chen, Zhen and Woo, Peter YM and Yuan, Yixuan},
-  journal={IEEE Transactions on Medical Imaging},
-  year={2022},
-  publisher={IEEE}
-}
+python predict.py
 ```
+
 
 ## Acknowledgement
-1. The implementation is based on the repo: [DMFNet](https://github.com/China-LiuXiaopeng/BraTS-DMFNet)
+1. The implementation is based on the repo: [ffmpeg-bitrate-stats](https://github.com/slhck/ffmpeg-bitrate-stats) and [Deep Learning for Time Series Classification](https://github.com/hfawaz/dl-4-tsc).
