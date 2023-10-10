@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 ### Set your path to the folder containing the .csv files
 from matplotlib.ticker import MultipleLocator
 
-PATH =r"C:\Users\18686\Desktop\ceshiji\csv\\"
+PATH =r""
 
 ### Fetch all files in path
 fileNames = os.listdir(PATH)
