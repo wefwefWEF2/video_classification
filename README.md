@@ -26,7 +26,7 @@ pip install -r requirements.txt
 ## Dateset
 ### Download
 We created a large data set consisting of 29,142 video clips, each containing at least 3,000 frames.
-[Download](https://tinyurl.com/ bitstream-video-data)
+[Download](https://tinyurl.com/bitstream-video-data)
 
 
 
