@@ -39,7 +39,7 @@ ffmpeg -i input -c:v libx264 -b:v 1.5M output
 Extract bitstream cover of the videos
 
 ```
-cd /ffmpeg_frame_size_calculate
+cd ffmpeg_frame_size_calculate
 bash deal.sh
 ```
 
