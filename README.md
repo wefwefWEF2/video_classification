@@ -10,13 +10,12 @@ increasing computational and storage demands. Moreover, these methods often suff
 bitstream of a video to perform classification, eliminating the need for bitstream. We validate our approach using a custombuilt data set comprising over 29,000 YouTube video clips, totaling 6,000 hours and spanning 11 distinct categories. Our preliminary evaluations indicate precision, accuracy, and recall rates well over 80%.
 
 ## Requirements
-All experiments use the PyTorch library. We recommend installing the following package versions:
+All experiments use the tensorflow. We recommend installing the following package versions:
 
-* &nbsp;&nbsp; python=3.7 
+* &nbsp;&nbsp; python=3.6.5 
 
-* &nbsp;&nbsp; pytorch=1.6.0
+* &nbsp;&nbsp; tensorflow-gpu=2.4.0
 
-* &nbsp;&nbsp; torchvision=0.7.0
 
 Dependency packages can be installed using following command:
 ```
