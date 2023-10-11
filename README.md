@@ -30,11 +30,11 @@ We created a large data set consisting of 29,142 video clips, each containing at
 
 
 ### Data preprocess
-Transcoded the input video to 1.5, 1.2, 1.0, 0.8, and 0.5 Mbps using the FFmpeg open-source H.264/AVC encoder with the same encoding settings.
+Transcoded the input video to different Mbps using the FFmpeg open-source H.264/AVC encoder with the same encoding settings.
 
 ```
-Average Bitrate (ABR) mode: ffmpeg -i input -c:v libx264 -b:v 1.5M output
-Constant Bitrate (CBR) mode: 
+Average Bitrate (ABR) mode: ffmpeg -i input.mp4 -c:v libx264 -b:v 1.5M output.mp4
+Constant Bitrate (CBR) mode: ffmpeg -i input.mp4 -c:v libx264 -crf 23 output.mp4
 ```
 Extract bitstream cover of the videos
 
