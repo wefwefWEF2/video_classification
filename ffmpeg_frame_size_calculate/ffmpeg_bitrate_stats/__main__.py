@@ -266,7 +266,7 @@ class BitrateStats:
         if len(frame_list) < 2:
             return math.nan
         duration = float(frame_list[-1]["pts"]) - float(frame_list[0]["pts"])
-        size = sum(f["size"] for f in frame_list)#总视频size
+        size = sum(f["size"] for f in frame_list)#all video size
         bitrate = ((size * 8) / 1000) / duration
 
         return bitrate
@@ -334,13 +334,12 @@ class BitrateStats:
         cols.insert(0, cols.pop(cols.index("input_file")))
         df = df.reindex(columns=cols)
         print(df.to_csv(index=False))
-        #修改存放位置
         newFileName = self.input_file.split(".")[0]
-        
+        #save
         (filepath, tempfilename) = os.path.split(self.input_file)
         (filename, extension) = os.path.splitext(tempfilename)
 
-        savePath = r"/data/dyn123/youtube_video/dyn/1500k训练集/264/1500traincsv/"
+        savePath = r"/data/dyn123/youtube_video/dyn/1500k_train/264/1500traincsv/"
         #savePath = ""
         export_path=savePath + filename + ".csv"
         df.to_csv(path_or_buf=export_path, encoding="utf-8-sig", header=False, index=False)
