@@ -1,6 +1,6 @@
 # Judging a video by its bitstream cover
 
-This repository is the official implementation of [Judging a video by its bitstream cover](https://arxiv.org/pdf/2309.07361v1.pdf).
+This repository is the official implementation of Judging a video by its bitstream cover[https://ieeexplore.ieee.org/document/10533701).
 
 ## Overview
 
