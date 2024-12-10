@@ -1,8 +1,12 @@
 # Judging a video by its bitstream cover
 
-This repository is the official implementation of Judging a video by its bitstream cover. 
-Published in: 2024 Data Compression Conference (DCC).
-[https://ieeexplore.ieee.org/document/10533701).
+<h1>Judging a video by its bitstream cover</h1>
+
+<p>This repository is the official implementation of Judging a video by its bitstream cover.<br>
+Published in: 2024 Data Compression Conference (DCC).<br>
+<a href="https://ieeexplore.ieee.org/document/10533701">https://ieeexplore.ieee.org/document/10533701</a></p>
+
+<h2>Overview</h2>
 
 ## Overview
 
