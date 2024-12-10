@@ -12,7 +12,7 @@ Classifying videos into distinct categories, such as Sport and Music Video, is c
 in an age where an immense volume of video content is constantly being generated. Traditional methods require video decompression to extract pixel-level features like color, texture, and motion, thereby
 increasing computational and storage demands. Moreover, these methods often suffer from performance degradation in low-quality videos. We present a novel approach that examines only the post-compression
 bitstream of a video to perform classification, eliminating the need for bitstream. We validate our approach using a custombuilt data set comprising over 29,000 YouTube video clips, totaling 6,000 hours and spanning 11 distinct categories. Our preliminary evaluations indicate precision, accuracy, and recall rates well over 80%.
-https://github.com/wefwefWEF2/video_classification/blob/master/README.md
+
 ## Requirements
 All experiments use the tensorflow. We recommend installing the following package versions:
 
