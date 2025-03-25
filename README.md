@@ -6,7 +6,7 @@ Published in: 2024 Data Compression Conference (DCC).<br>
 <a href="https://ieeexplore.ieee.org/document/10533701">https://ieeexplore.ieee.org/document/10533701</a></p>
 
 <p align="center" width="100%">
-<img src="images/overview_1.png"  width="80%" height="80%">
+<img src="image/overview_1.png"  width="80%" height="80%">
 </p>
 
 ## Overview
@@ -35,7 +35,7 @@ We created a large dataset consisting of 29,142 video clips, each containing at 
 [Download](https://tinyurl.com/bitstream-video-data)
 
 <p align="center" width="100%">
-<img src="images/thumbnail.png"  width="80%" height="80%">
+<img src="image/thumbnail.png"  width="80%" height="80%">
 </p>
 
 ### Data preprocess
