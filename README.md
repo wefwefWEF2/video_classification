@@ -34,7 +34,9 @@ pip install -r requirements.txt
 We created a large dataset consisting of 29,142 video clips, each containing at least 3,000 frames.
 [Download](https://tinyurl.com/bitstream-video-data)
 
-
+<p align="center" width="100%">
+<img src="thumbnail.png"  width="80%" height="80%">
+</p>
 
 ### Data preprocess
 Transcoded the input video to different Mbps using the FFmpeg open-source H.264/AVC encoder with the same encoding settings.
