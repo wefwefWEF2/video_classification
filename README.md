@@ -6,7 +6,7 @@ Published in: 2024 Data Compression Conference (DCC).<br>
 <a href="https://ieeexplore.ieee.org/document/10533701">https://ieeexplore.ieee.org/document/10533701</a></p>
 
 <p align="center" width="100%">
-<img src="image/overview_1.png"  width="80%" height="80%">
+<img src="image/overview_1.png"  width="100%" height="100%">
 </p>
 
 ## Overview
